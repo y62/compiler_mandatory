@@ -1,14 +1,23 @@
 grammar impl;
 
-start   : '.hardware' IDENTIFIER '.inputs' IDENTIFIER '.outputs' IDENTIFIER+ latchdec '.update' updateDecl+ '.simulate' simInp EOF;
-latchdec : '.latch' IDENTIFIER '->' IDENTIFIER;
-updateDecl : IDENTIFIER '=' expr*;
+start   : '.hardware' IDENTIFIER '.inputs'
+        IDENTIFIER '.outputs' IDENTIFIER+
+        latchdec '.update' updateDecl+
+        '.simulate' simInp EOF                        #Program
+        ;
 
-expr     : '!' expr
-         | expr '&&' expr
-         |  IDENTIFIER;
 
-simInp   : IDENTIFIER '=' NUM;
+latchdec : '.latch' IDENTIFIER '->' IDENTIFIER        #Latch
+         ;
+updateDecl : IDENTIFIER '=' expr*                     #Update
+;
+expr     : '!' expr                                   #And
+         | expr '&&' expr                             #Not
+         |  IDENTIFIER                                #Identifier
+         ;
+
+simInp   : IDENTIFIER '=' NUM                         #Simulate
+         ;
 
 D    : ALPHA (ALPHA|NUM) ;
 NUM   : [0-1]+;
