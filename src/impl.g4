@@ -5,8 +5,6 @@ start   : '.hardware' IDENTIFIER '.inputs'
         latchdec '.update' updateDecl+
         '.simulate' simInp EOF                        #Program
         ;
-//commands : cmds+=command* ;
-//man har liste af commands. Hver gang der tilføjes en command, tilføjes den i cmds liste.
 
 latchdec : '.latch' IDENTIFIER '->' IDENTIFIER        #Latch
          ;
