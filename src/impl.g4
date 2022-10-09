@@ -11,8 +11,8 @@ latchdec : '.latch' IDENTIFIER '->' IDENTIFIER        #Latch
 updateDecl : IDENTIFIER '=' expr*                     #Update
          ;
 expr     : '!' expr                                   #Expression
-         | expr '&&' expr
-         |  IDENTIFIER
+         | expr '&&' expr                             #And
+         |  IDENTIFIER                                #Or
          ;
 
 simInp   : IDENTIFIER '=' NUM                         #Simulate
