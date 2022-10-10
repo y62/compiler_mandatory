@@ -1,21 +1,22 @@
 grammar impl;
 
-start   : '.hardware' IDENTIFIER '.inputs'
-        IDENTIFIER '.outputs' IDENTIFIER+
+start   : '.hardware' x1=IDENTIFIER '.inputs'
+        x2=IDENTIFIER '.outputs' x3=IDENTIFIER+
         latchdec '.update' updateDecl+
-        '.simulate' simInp EOF                        #Program
+        '.simulate' simInp EOF                        #Program //Sequence
         ;
 
-latchdec : '.latch' IDENTIFIER '->' IDENTIFIER        #Latch
+latchdec : '.latch' x1=IDENTIFIER '->' x2=IDENTIFIER  #Latch
          ;
-updateDecl : IDENTIFIER '=' expr*                     #Update
+updateDecl : x1=IDENTIFIER '=' e1=expr*               #Update
          ;
-expr     : '!' expr                                   #Expression
-         | expr '&&' expr                             #And
-         |  IDENTIFIER                                #Or
+expr     : '!' e1=expr                                #Not
+         | e1=expr '&&' e2=expr                       #And
+         | c=NUM		     	                      #Constant
+         | x1=IDENTIFIER                              #Variable
          ;
 
-simInp   : IDENTIFIER '=' NUM                         #Simulate
+simInp   : x1=IDENTIFIER '=' c=NUM                    #Simulate
          ;
 
 D    : ALPHA (ALPHA|NUM) ;
@@ -27,7 +28,7 @@ IDENTIFIER : [a-zA-Z_] [a-zA-Z0-9_]*;
 CONST : [0-9]+ ('.' [0-9]+)? ;
 HVIDRUM : [ \t\n\r]+ -> skip ;
 KOMMENTAR : '//' ~[\n]* -> skip ;
-MULTILINECOMMENTS :  '/*'  ( '*'~[/] | ~[*]  )* '*/' -> skip; 
+MULTILINECOMMENTS :  '/*'  ( '*'~[/] | ~[*]  )* '*/' -> skip;
 
 
 
