@@ -38,14 +38,14 @@ public interface implVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNot(implParser.NotContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Or}
+	 * Visit a parse tree produced by the {@code Variable}
 	 * labeled alternative in {@link implParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOr(implParser.OrContext ctx);
+	T visitVariable(implParser.VariableContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code And}
+	 * Visit a parse tree produced by the {@code Constant}
 	 * labeled alternative in {@link implParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

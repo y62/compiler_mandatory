@@ -1,7 +1,12 @@
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
+import org.antlr.v4.runtime.tree.ParseTree;
+
 import java.io.IOException;
 
 public class main {
-/*
     public static void main(String[] args) throws IOException {
 
         // we expect exactly one argument: the name of the input file
@@ -14,7 +19,7 @@ public class main {
         }
         String filename=args[0];
 
-        // open the input file
+        /* open the input file */
         CharStream input = CharStreams.fromFileName(filename);
         //new ANTLRFileStream (filename); // depricated
 
@@ -36,6 +41,41 @@ public class main {
         //System.out.println("The result is: "+
         result.eval(new Environment());
     }
+}
 
-*/
+class Interpreter extends AbstractParseTreeVisitor<AST> implements implVisitor<AST> {
+
+
+    @Override
+    public AST visitProgram(implParser.ProgramContext ctx) {
+        return null;
+    }
+    public AST visitVariable(implParser.VariableContext ctx){
+        return new Variable(ctx.x1.getText());
+    }
+
+    @Override
+    public AST visitLatch(implParser.LatchContext ctx) {
+        return new Latch(ctx.x1.getText(), ctx.x2.getText());
+    }
+
+    @Override
+    public AST visitUpdate(implParser.UpdateContext ctx) {
+        return new Update((Expr) visit(ctx.e1), ctx.x1.getText());
+    }
+
+    @Override
+    public AST visitNot(implParser.NotContext ctx) {
+        return new Not((Condition) visit(ctx.e1));
+    }
+
+    @Override
+    public AST visitAnd(implParser.AndContext ctx) {
+        return new And((Condition) visit(ctx.e1), (Condition)visit(ctx.e2));
+    }
+
+    @Override
+    public AST visitSimulate(implParser.SimulateContext ctx) {
+        return new Simulate(ctx.x1.getText(), Integer.parseInt(ctx.c.getText()));
+    }
 }

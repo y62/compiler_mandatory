@@ -106,10 +106,9 @@ public class implParser extends Parser {
 		}
 	}
 	public static class ProgramContext extends StartContext {
-		public List<TerminalNode> IDENTIFIER() { return getTokens(implParser.IDENTIFIER); }
-		public TerminalNode IDENTIFIER(int i) {
-			return getToken(implParser.IDENTIFIER, i);
-		}
+		public Token x1;
+		public Token x2;
+		public Token x3;
 		public LatchdecContext latchdec() {
 			return getRuleContext(LatchdecContext.class,0);
 		}
@@ -117,6 +116,10 @@ public class implParser extends Parser {
 			return getRuleContext(SimInpContext.class,0);
 		}
 		public TerminalNode EOF() { return getToken(implParser.EOF, 0); }
+		public List<TerminalNode> IDENTIFIER() { return getTokens(implParser.IDENTIFIER); }
+		public TerminalNode IDENTIFIER(int i) {
+			return getToken(implParser.IDENTIFIER, i);
+		}
 		public List<UpdateDeclContext> updateDecl() {
 			return getRuleContexts(UpdateDeclContext.class);
 		}
@@ -150,11 +153,11 @@ public class implParser extends Parser {
 			setState(10);
 			match(T__0);
 			setState(11);
-			match(IDENTIFIER);
+			((ProgramContext)_localctx).x1 = match(IDENTIFIER);
 			setState(12);
 			match(T__1);
 			setState(13);
-			match(IDENTIFIER);
+			((ProgramContext)_localctx).x2 = match(IDENTIFIER);
 			setState(14);
 			match(T__2);
 			setState(16); 
@@ -164,7 +167,7 @@ public class implParser extends Parser {
 				{
 				{
 				setState(15);
-				match(IDENTIFIER);
+				((ProgramContext)_localctx).x3 = match(IDENTIFIER);
 				}
 				}
 				setState(18); 
@@ -220,6 +223,8 @@ public class implParser extends Parser {
 		}
 	}
 	public static class LatchContext extends LatchdecContext {
+		public Token x1;
+		public Token x2;
 		public List<TerminalNode> IDENTIFIER() { return getTokens(implParser.IDENTIFIER); }
 		public TerminalNode IDENTIFIER(int i) {
 			return getToken(implParser.IDENTIFIER, i);
@@ -250,11 +255,11 @@ public class implParser extends Parser {
 			setState(31);
 			match(T__5);
 			setState(32);
-			match(IDENTIFIER);
+			((LatchContext)_localctx).x1 = match(IDENTIFIER);
 			setState(33);
 			match(T__6);
 			setState(34);
-			match(IDENTIFIER);
+			((LatchContext)_localctx).x2 = match(IDENTIFIER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -280,6 +285,8 @@ public class implParser extends Parser {
 		}
 	}
 	public static class UpdateContext extends UpdateDeclContext {
+		public Token x1;
+		public ExprContext e1;
 		public TerminalNode IDENTIFIER() { return getToken(implParser.IDENTIFIER, 0); }
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
@@ -312,7 +319,7 @@ public class implParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(36);
-			match(IDENTIFIER);
+			((UpdateContext)_localctx).x1 = match(IDENTIFIER);
 			setState(37);
 			match(T__7);
 			setState(41);
@@ -323,7 +330,7 @@ public class implParser extends Parser {
 					{
 					{
 					setState(38);
-					expr(0);
+					((UpdateContext)_localctx).e1 = expr(0);
 					}
 					} 
 				}
@@ -356,6 +363,7 @@ public class implParser extends Parser {
 		}
 	}
 	public static class NotContext extends ExprContext {
+		public ExprContext e1;
 		public ExprContext expr() {
 			return getRuleContext(ExprContext.class,0);
 		}
@@ -374,24 +382,45 @@ public class implParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class OrContext extends ExprContext {
+	public static class VariableContext extends ExprContext {
+		public Token x1;
 		public TerminalNode IDENTIFIER() { return getToken(implParser.IDENTIFIER, 0); }
-		public OrContext(ExprContext ctx) { copyFrom(ctx); }
+		public VariableContext(ExprContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof implListener ) ((implListener)listener).enterOr(this);
+			if ( listener instanceof implListener ) ((implListener)listener).enterVariable(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof implListener ) ((implListener)listener).exitOr(this);
+			if ( listener instanceof implListener ) ((implListener)listener).exitVariable(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof implVisitor ) return ((implVisitor<? extends T>)visitor).visitOr(this);
+			if ( visitor instanceof implVisitor ) return ((implVisitor<? extends T>)visitor).visitVariable(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ConstantContext extends ExprContext {
+		public Token c;
+		public TerminalNode NUM() { return getToken(implParser.NUM, 0); }
+		public ConstantContext(ExprContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof implListener ) ((implListener)listener).enterConstant(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof implListener ) ((implListener)listener).exitConstant(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof implVisitor ) return ((implVisitor<? extends T>)visitor).visitConstant(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 	public static class AndContext extends ExprContext {
+		public ExprContext e1;
+		public ExprContext e2;
 		public List<ExprContext> expr() {
 			return getRuleContexts(ExprContext.class);
 		}
@@ -429,7 +458,7 @@ public class implParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(48);
+			setState(49);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__8:
@@ -441,23 +470,32 @@ public class implParser extends Parser {
 				setState(45);
 				match(T__8);
 				setState(46);
-				expr(3);
+				((NotContext)_localctx).e1 = expr(4);
+				}
+				break;
+			case NUM:
+				{
+				_localctx = new ConstantContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(47);
+				((ConstantContext)_localctx).c = match(NUM);
 				}
 				break;
 			case IDENTIFIER:
 				{
-				_localctx = new OrContext(_localctx);
+				_localctx = new VariableContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(47);
-				match(IDENTIFIER);
+				setState(48);
+				((VariableContext)_localctx).x1 = match(IDENTIFIER);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(55);
+			setState(56);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -467,17 +505,18 @@ public class implParser extends Parser {
 					{
 					{
 					_localctx = new AndContext(new ExprContext(_parentctx, _parentState));
+					((AndContext)_localctx).e1 = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_expr);
-					setState(50);
-					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
 					setState(51);
-					match(T__9);
+					if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
 					setState(52);
-					expr(3);
+					match(T__9);
+					setState(53);
+					((AndContext)_localctx).e2 = expr(4);
 					}
 					} 
 				}
-				setState(57);
+				setState(58);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,4,_ctx);
 			}
@@ -506,6 +545,8 @@ public class implParser extends Parser {
 		}
 	}
 	public static class SimulateContext extends SimInpContext {
+		public Token x1;
+		public Token c;
 		public TerminalNode IDENTIFIER() { return getToken(implParser.IDENTIFIER, 0); }
 		public TerminalNode NUM() { return getToken(implParser.NUM, 0); }
 		public SimulateContext(SimInpContext ctx) { copyFrom(ctx); }
@@ -531,12 +572,12 @@ public class implParser extends Parser {
 			_localctx = new SimulateContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(58);
-			match(IDENTIFIER);
 			setState(59);
-			match(T__7);
+			((SimulateContext)_localctx).x1 = match(IDENTIFIER);
 			setState(60);
-			match(NUM);
+			match(T__7);
+			setState(61);
+			((SimulateContext)_localctx).c = match(NUM);
 			}
 		}
 		catch (RecognitionException re) {
@@ -560,13 +601,13 @@ public class implParser extends Parser {
 	private boolean expr_sempred(ExprContext _localctx, int predIndex) {
 		switch (predIndex) {
 		case 0:
-			return precpred(_ctx, 2);
+			return precpred(_ctx, 3);
 		}
 		return true;
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0014?\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001\u0014@\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0001"+
 		"\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0004"+
 		"\u0000\u0011\b\u0000\u000b\u0000\f\u0000\u0012\u0001\u0000\u0001\u0000"+
@@ -574,36 +615,37 @@ public class implParser extends Parser {
 		"\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001\u0001"+
 		"\u0001\u0001\u0001\u0001\u0001\u0001\u0002\u0001\u0002\u0001\u0002\u0005"+
 		"\u0002(\b\u0002\n\u0002\f\u0002+\t\u0002\u0001\u0003\u0001\u0003\u0001"+
-		"\u0003\u0001\u0003\u0003\u00031\b\u0003\u0001\u0003\u0001\u0003\u0001"+
-		"\u0003\u0005\u00036\b\u0003\n\u0003\f\u00039\t\u0003\u0001\u0004\u0001"+
-		"\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0000\u0001\u0006\u0005\u0000"+
-		"\u0002\u0004\u0006\b\u0000\u0000>\u0000\n\u0001\u0000\u0000\u0000\u0002"+
-		"\u001f\u0001\u0000\u0000\u0000\u0004$\u0001\u0000\u0000\u0000\u00060\u0001"+
-		"\u0000\u0000\u0000\b:\u0001\u0000\u0000\u0000\n\u000b\u0005\u0001\u0000"+
-		"\u0000\u000b\f\u0005\u0010\u0000\u0000\f\r\u0005\u0002\u0000\u0000\r\u000e"+
-		"\u0005\u0010\u0000\u0000\u000e\u0010\u0005\u0003\u0000\u0000\u000f\u0011"+
-		"\u0005\u0010\u0000\u0000\u0010\u000f\u0001\u0000\u0000\u0000\u0011\u0012"+
-		"\u0001\u0000\u0000\u0000\u0012\u0010\u0001\u0000\u0000\u0000\u0012\u0013"+
-		"\u0001\u0000\u0000\u0000\u0013\u0014\u0001\u0000\u0000\u0000\u0014\u0015"+
-		"\u0003\u0002\u0001\u0000\u0015\u0017\u0005\u0004\u0000\u0000\u0016\u0018"+
-		"\u0003\u0004\u0002\u0000\u0017\u0016\u0001\u0000\u0000\u0000\u0018\u0019"+
-		"\u0001\u0000\u0000\u0000\u0019\u0017\u0001\u0000\u0000\u0000\u0019\u001a"+
-		"\u0001\u0000\u0000\u0000\u001a\u001b\u0001\u0000\u0000\u0000\u001b\u001c"+
-		"\u0005\u0005\u0000\u0000\u001c\u001d\u0003\b\u0004\u0000\u001d\u001e\u0005"+
-		"\u0000\u0000\u0001\u001e\u0001\u0001\u0000\u0000\u0000\u001f \u0005\u0006"+
-		"\u0000\u0000 !\u0005\u0010\u0000\u0000!\"\u0005\u0007\u0000\u0000\"#\u0005"+
-		"\u0010\u0000\u0000#\u0003\u0001\u0000\u0000\u0000$%\u0005\u0010\u0000"+
-		"\u0000%)\u0005\b\u0000\u0000&(\u0003\u0006\u0003\u0000\'&\u0001\u0000"+
-		"\u0000\u0000(+\u0001\u0000\u0000\u0000)\'\u0001\u0000\u0000\u0000)*\u0001"+
-		"\u0000\u0000\u0000*\u0005\u0001\u0000\u0000\u0000+)\u0001\u0000\u0000"+
-		"\u0000,-\u0006\u0003\uffff\uffff\u0000-.\u0005\t\u0000\u0000.1\u0003\u0006"+
-		"\u0003\u0003/1\u0005\u0010\u0000\u00000,\u0001\u0000\u0000\u00000/\u0001"+
-		"\u0000\u0000\u000017\u0001\u0000\u0000\u000023\n\u0002\u0000\u000034\u0005"+
-		"\n\u0000\u000046\u0003\u0006\u0003\u000352\u0001\u0000\u0000\u000069\u0001"+
-		"\u0000\u0000\u000075\u0001\u0000\u0000\u000078\u0001\u0000\u0000\u0000"+
-		"8\u0007\u0001\u0000\u0000\u000097\u0001\u0000\u0000\u0000:;\u0005\u0010"+
-		"\u0000\u0000;<\u0005\b\u0000\u0000<=\u0005\f\u0000\u0000=\t\u0001\u0000"+
-		"\u0000\u0000\u0005\u0012\u0019)07";
+		"\u0003\u0001\u0003\u0001\u0003\u0003\u00032\b\u0003\u0001\u0003\u0001"+
+		"\u0003\u0001\u0003\u0005\u00037\b\u0003\n\u0003\f\u0003:\t\u0003\u0001"+
+		"\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0000\u0001\u0006"+
+		"\u0005\u0000\u0002\u0004\u0006\b\u0000\u0000@\u0000\n\u0001\u0000\u0000"+
+		"\u0000\u0002\u001f\u0001\u0000\u0000\u0000\u0004$\u0001\u0000\u0000\u0000"+
+		"\u00061\u0001\u0000\u0000\u0000\b;\u0001\u0000\u0000\u0000\n\u000b\u0005"+
+		"\u0001\u0000\u0000\u000b\f\u0005\u0010\u0000\u0000\f\r\u0005\u0002\u0000"+
+		"\u0000\r\u000e\u0005\u0010\u0000\u0000\u000e\u0010\u0005\u0003\u0000\u0000"+
+		"\u000f\u0011\u0005\u0010\u0000\u0000\u0010\u000f\u0001\u0000\u0000\u0000"+
+		"\u0011\u0012\u0001\u0000\u0000\u0000\u0012\u0010\u0001\u0000\u0000\u0000"+
+		"\u0012\u0013\u0001\u0000\u0000\u0000\u0013\u0014\u0001\u0000\u0000\u0000"+
+		"\u0014\u0015\u0003\u0002\u0001\u0000\u0015\u0017\u0005\u0004\u0000\u0000"+
+		"\u0016\u0018\u0003\u0004\u0002\u0000\u0017\u0016\u0001\u0000\u0000\u0000"+
+		"\u0018\u0019\u0001\u0000\u0000\u0000\u0019\u0017\u0001\u0000\u0000\u0000"+
+		"\u0019\u001a\u0001\u0000\u0000\u0000\u001a\u001b\u0001\u0000\u0000\u0000"+
+		"\u001b\u001c\u0005\u0005\u0000\u0000\u001c\u001d\u0003\b\u0004\u0000\u001d"+
+		"\u001e\u0005\u0000\u0000\u0001\u001e\u0001\u0001\u0000\u0000\u0000\u001f"+
+		" \u0005\u0006\u0000\u0000 !\u0005\u0010\u0000\u0000!\"\u0005\u0007\u0000"+
+		"\u0000\"#\u0005\u0010\u0000\u0000#\u0003\u0001\u0000\u0000\u0000$%\u0005"+
+		"\u0010\u0000\u0000%)\u0005\b\u0000\u0000&(\u0003\u0006\u0003\u0000\'&"+
+		"\u0001\u0000\u0000\u0000(+\u0001\u0000\u0000\u0000)\'\u0001\u0000\u0000"+
+		"\u0000)*\u0001\u0000\u0000\u0000*\u0005\u0001\u0000\u0000\u0000+)\u0001"+
+		"\u0000\u0000\u0000,-\u0006\u0003\uffff\uffff\u0000-.\u0005\t\u0000\u0000"+
+		".2\u0003\u0006\u0003\u0004/2\u0005\f\u0000\u000002\u0005\u0010\u0000\u0000"+
+		"1,\u0001\u0000\u0000\u00001/\u0001\u0000\u0000\u000010\u0001\u0000\u0000"+
+		"\u000028\u0001\u0000\u0000\u000034\n\u0003\u0000\u000045\u0005\n\u0000"+
+		"\u000057\u0003\u0006\u0003\u000463\u0001\u0000\u0000\u00007:\u0001\u0000"+
+		"\u0000\u000086\u0001\u0000\u0000\u000089\u0001\u0000\u0000\u00009\u0007"+
+		"\u0001\u0000\u0000\u0000:8\u0001\u0000\u0000\u0000;<\u0005\u0010\u0000"+
+		"\u0000<=\u0005\b\u0000\u0000=>\u0005\f\u0000\u0000>\t\u0001\u0000\u0000"+
+		"\u0000\u0005\u0012\u0019)18";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
