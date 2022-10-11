@@ -5,6 +5,18 @@ public abstract class AST {
 
 }
 
+abstract class Command extends AST{
+    abstract public void eval(Environment env);
+}
+class Sequence extends Command{
+    Command c1,c2;
+    Sequence(Command c1,Command c2){this.c1=c1; this.c2=c2;}
+    public void eval(Environment env){
+        c1.eval(env);
+        c2.eval(env);
+    }
+}
+
 abstract class Expr extends AST{
     abstract public Integer eval(Environment env);
 }

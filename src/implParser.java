@@ -400,24 +400,6 @@ public class implParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class ConstantContext extends ExprContext {
-		public Token c;
-		public TerminalNode NUM() { return getToken(implParser.NUM, 0); }
-		public ConstantContext(ExprContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof implListener ) ((implListener)listener).enterConstant(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof implListener ) ((implListener)listener).exitConstant(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof implVisitor ) return ((implVisitor<? extends T>)visitor).visitConstant(this);
-			else return visitor.visitChildren(this);
-		}
-	}
 	public static class AndContext extends ExprContext {
 		public ExprContext e1;
 		public ExprContext e2;
@@ -474,13 +456,7 @@ public class implParser extends Parser {
 				}
 				break;
 			case NUM:
-				{
-				_localctx = new ConstantContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(47);
-				((ConstantContext)_localctx).c = match(NUM);
-				}
+
 				break;
 			case IDENTIFIER:
 				{

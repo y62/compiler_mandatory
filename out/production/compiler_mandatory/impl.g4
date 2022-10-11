@@ -12,7 +12,6 @@ updateDecl : x1=IDENTIFIER '=' e1=expr*               #Update
          ;
 expr     : '!' e1=expr                                #Not
          | e1=expr '&&' e2=expr                       #And
-         | c=NUM		     	                      #Constant
          | x1=IDENTIFIER                              #Variable
          ;
 

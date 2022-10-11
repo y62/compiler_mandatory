@@ -21,4 +21,14 @@ public class Environment {
         }
         return table;
     }
+
+
+
+    public void initialize() {
+
+    }
+
+    public void nextCycle() {
+
+    }
 }

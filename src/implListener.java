@@ -66,18 +66,8 @@ public interface implListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariable(implParser.VariableContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code Constant}
-	 * labeled alternative in {@link implParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void enterConstant(implParser.ConstantContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code Constant}
-	 * labeled alternative in {@link implParser#expr}.
-	 * @param ctx the parse tree
-	 */
-	void exitConstant(implParser.ConstantContext ctx);
+
+
 	/**
 	 * Enter a parse tree produced by the {@code And}
 	 * labeled alternative in {@link implParser#expr}.
