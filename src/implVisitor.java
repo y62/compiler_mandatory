@@ -10,8 +10,28 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface implVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by {@link implParser#start}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStart(implParser.StartContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Sequence}
+	 * labeled alternative in {@link implParser#commands}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSequence(implParser.SequenceContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NOP}
+	 * labeled alternative in {@link implParser#commands}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNOP(implParser.NOPContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Program}
-	 * labeled alternative in {@link implParser#start}.
+	 * labeled alternative in {@link implParser#command}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
@@ -45,7 +65,7 @@ public interface implVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariable(implParser.VariableContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code Constant}
+	 * Visit a parse tree produced by the {@code And}
 	 * labeled alternative in {@link implParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class AST {
 
 }
@@ -109,6 +106,11 @@ class Not extends Condition {
     public Boolean eval(Environment env) {
         return !(e1.eval(env));
     }
+}
+
+class NOP extends Command{
+    NOP(){}
+    public void eval(Environment env){};
 }
 
 

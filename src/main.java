@@ -38,13 +38,24 @@ public class main {
 
 class Interpreter extends AbstractParseTreeVisitor<AST> implements implVisitor<AST> {
 
+    @Override
+    public AST visitStart(implParser.StartContext ctx) {
+        return visit(ctx.cs);
+    }
+
+    @Override
+    public AST visitSequence(implParser.SequenceContext ctx) {
+        return new Sequence((Command)visit(ctx.c),(Command)visit(ctx.cs));
+    }
+
+    @Override
+    public AST visitNOP(implParser.NOPContext ctx) {
+        return new NOP();
+    }
 
     @Override
     public AST visitProgram(implParser.ProgramContext ctx) {
-        return new Variable(ctx.x1.getText());
-    }
-    public AST visitVariable(implParser.VariableContext ctx){
-        return new Variable(ctx.x1.getText());
+        return null;
     }
 
     @Override
@@ -56,7 +67,6 @@ class Interpreter extends AbstractParseTreeVisitor<AST> implements implVisitor<A
     public AST visitUpdate(implParser.UpdateContext ctx) {
         return new Update((Expr) visit(ctx.e1), ctx.x1.getText());
     }
-
     @Override
     public AST visitNot(implParser.NotContext ctx) {
         return new Not((Condition) visit(ctx.e1));
@@ -71,4 +81,10 @@ class Interpreter extends AbstractParseTreeVisitor<AST> implements implVisitor<A
     public AST visitSimulate(implParser.SimulateContext ctx) {
         return new Simulate(ctx.x1.getText(), Integer.parseInt(ctx.c.getText()));
     }
+
+    @Override
+    public AST visitVariable(implParser.VariableContext ctx) {
+        return new Variable(ctx.x1.getText());
+    }
+
 }

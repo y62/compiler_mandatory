@@ -7,14 +7,48 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface implListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by {@link implParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void enterStart(implParser.StartContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link implParser#start}.
+	 * @param ctx the parse tree
+	 */
+	void exitStart(implParser.StartContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code Sequence}
+	 * labeled alternative in {@link implParser#commands}.
+	 * @param ctx the parse tree
+	 */
+	void enterSequence(implParser.SequenceContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code Sequence}
+	 * labeled alternative in {@link implParser#commands}.
+	 * @param ctx the parse tree
+	 */
+	void exitSequence(implParser.SequenceContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NOP}
+	 * labeled alternative in {@link implParser#commands}.
+	 * @param ctx the parse tree
+	 */
+	void enterNOP(implParser.NOPContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NOP}
+	 * labeled alternative in {@link implParser#commands}.
+	 * @param ctx the parse tree
+	 */
+	void exitNOP(implParser.NOPContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Program}
-	 * labeled alternative in {@link implParser#start}.
+	 * labeled alternative in {@link implParser#command}.
 	 * @param ctx the parse tree
 	 */
 	void enterProgram(implParser.ProgramContext ctx);
 	/**
 	 * Exit a parse tree produced by the {@code Program}
-	 * labeled alternative in {@link implParser#start}.
+	 * labeled alternative in {@link implParser#command}.
 	 * @param ctx the parse tree
 	 */
 	void exitProgram(implParser.ProgramContext ctx);
@@ -66,8 +100,6 @@ public interface implListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariable(implParser.VariableContext ctx);
-
-
 	/**
 	 * Enter a parse tree produced by the {@code And}
 	 * labeled alternative in {@link implParser#expr}.
