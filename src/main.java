@@ -5,22 +5,16 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class main {
     public static void main(String[] args) throws IOException {
 
         // we expect exactly one argument: the name of the input file
-        if (args.length!=1) {
-            System.err.println("\n");
-            System.err.println("Impl Interpreter\n");
-            System.err.println("=================\n\n");
-            System.err.println("Please give as input argument a filename\n");
-            System.exit(-1);
-        }
-        String filename=args[0];
+
 
         /* open the input file */
-        CharStream input = CharStreams.fromFileName(filename);
+        CharStream input = CharStreams.fromFileName("C:\\Users\\y62\\compiler_mandatory\\src\\comp.hw");
         //new ANTLRFileStream (filename); // depricated
 
         // create a lexer/scanner
@@ -38,7 +32,7 @@ public class main {
         // Construct an interpreter and run it on the parse tree
         Interpreter interpreter = new Interpreter();
         Command result=(Command)interpreter.visit(parseTree);
-        //System.out.println("The result is: "+
+        System.out.println("The result is: " + result);
         result.eval(new Environment());
     }
 }
@@ -48,6 +42,11 @@ class Interpreter extends AbstractParseTreeVisitor<AST> implements implVisitor<A
 
     @Override
     public AST visitProgram(implParser.ProgramContext ctx) {
+        Variable input = (Variable) visitVariable(ctx.);
+        ArrayList<Variable> outputs = new ArrayList<>();
+        for(implParser.VariableContext var : ctx.x2) {
+            outputs.add((Variable) visitVariable(var));
+        }
         return null;
     }
     public AST visitVariable(implParser.VariableContext ctx){

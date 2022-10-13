@@ -107,7 +107,7 @@ public class implParser extends Parser {
 	}
 	public static class ProgramContext extends StartContext {
 		public Token x1;
-		public Token x2;
+		public VariableContext x2;
 		public Token x3;
 		public LatchdecContext latchdec() {
 			return getRuleContext(LatchdecContext.class,0);

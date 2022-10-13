@@ -50,15 +50,11 @@ class Latch extends Expr {
     }
 
 
-class Program {
-    public List<Expr> expr;
+class Program extends AST{
 
     public Program() {
-        this.expr = new ArrayList<>();
     }
-    public void addExpression(Expr e) {
-        expr.add(e);
-    }
+
 }
 
 
