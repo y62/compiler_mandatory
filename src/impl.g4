@@ -1,9 +1,15 @@
 grammar impl;
 
-start   : '.hardware' x1=IDENTIFIER '.inputs'
+start   : cs=commands EOF;
+
+commands : c=command cs=commands   # Sequence
+	 | 	   	      # NOP
+	 ;
+
+command   : '.hardware' x1=IDENTIFIER '.inputs'
         x2=IDENTIFIER '.outputs' x3=IDENTIFIER+
         latchdec '.update' updateDecl+
-        '.simulate' simInp EOF                        #Program //Sequence
+        '.simulate' simInp EOF                        #Program
         ;
 
 latchdec : '.latch' x1=IDENTIFIER '->' x2=IDENTIFIER  #Latch

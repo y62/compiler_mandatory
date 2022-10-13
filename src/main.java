@@ -5,7 +5,6 @@ import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class main {
     public static void main(String[] args) throws IOException {
@@ -42,12 +41,7 @@ class Interpreter extends AbstractParseTreeVisitor<AST> implements implVisitor<A
 
     @Override
     public AST visitProgram(implParser.ProgramContext ctx) {
-        Variable input = (Variable) visitVariable(ctx.);
-        ArrayList<Variable> outputs = new ArrayList<>();
-        for(implParser.VariableContext var : ctx.x2) {
-            outputs.add((Variable) visitVariable(var));
-        }
-        return null;
+        return new Variable(ctx.x1.getText());
     }
     public AST visitVariable(implParser.VariableContext ctx){
         return new Variable(ctx.x1.getText());
